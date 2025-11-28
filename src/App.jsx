@@ -1,53 +1,21 @@
-import "./App.css";
-import { useState } from "react";
-import { Button, Layout, theme } from "antd";
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
-import Logo from "./component/Logo";
-import MenuList from "./component/MenuList";
-import ToggleThemeButton from "./component/ToggleThemeButton";
-
-const { Header, Sider } = Layout;
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import HomePage from "./Components/HomePage";
+import About from "./Components/About";
+import Content from "./Components/content";
 
 function App() {
-  const [lightTheme, setLightTheme] = useState(true);
-  const [collaped, setcollapsed] = useState(false);
-
-  const toggleTheme = () => {
-    setLightTheme(!lightTheme);
+  const data = {
+    name: "mahintha",
+    age: "30",
   };
-
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-
   return (
-    <Layout>
-      <Sider
-        collapsed={collaped}
-        collapsible
-        trigger={null}
-        theme={lightTheme ? "light" : "dark"}
-        className="sidebar"
-      >
-        <Logo />
-        <MenuList lightTheme={lightTheme} />
-
-        <ToggleThemeButton lightTheme={lightTheme} toggleTheme={toggleTheme} />
-      </Sider>
-
-      <Layout>
-        {/* FIXED HEADER */}
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          <Button
-            type="text"
-            className="toggle"
-            onClick={() => setcollapsed(!collaped)}
-          >
-            {collaped ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          </Button>
-        </Header>
-      </Layout>
-    </Layout>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage data={data} />} />
+        <Route path="/about" element={<About data={data} />} />
+        <Route path="/content" element={<Content />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
